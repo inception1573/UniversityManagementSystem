@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+
+
+<div class="container">
+
+    <form id="myForm" method="post" role="form" style="width: 500px">
+        <fieldset>
+            <legend>Unallocate Course</legend>
+ 
+            <div>
+                <input type="submit" onclick="GetCreditTaken();" class="btn btn-info" value="Unallocate course"><span style="color: green">@ViewBag.unassign</span>
+            </div>
+            <div></div>
+        </fieldset>
+    </form>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+       
+
+
+        function GetCreditTaken() {
+
+            
+            var json = { id: 1 };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Index", "UnassignCourse")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function(data) {
+                    //alert(data);
+                    $.each(data, function(key, value) {
+                        //alert(key);
+                        $("#Credit_taken").val(data.Credit_taken);
+                    });
+                    $.each(data, function(key, value) {
+                        //alert(key);
+                        $("#RemainingCredit").val(data.RemainingCredit);
+                    });
+                    //alert(key);
+                }
+            });
+        };
+
+        
+        
+
+    </script>
+
+
+
+}

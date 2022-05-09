@@ -1,0 +1,85 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-inverse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#"><i class="fa fa-bars"></i>Department</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Department/Save">Save Department</a></li>
+                        <li><a href="/Department/GetDepartment">View Department</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#"><i class="fa fa-user"></i>Course</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Course/Save">Save Course</a></li>
+                        <li><a href="/ViewCourseStatics/GetAllCourseInfoByDepartment">View Course Statics</a></li>
+                        <li><a href="/EnrollCourse/Enroll">Enroll In a Course</a></li>
+                        <li><a href="/UnassignCourse/Index">Unassign All Courses</a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#"><i class="fa fa-user"></i>Teacher</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Teacher/Save">Save Teacher</a></li>
+                        <li><a href="/CourseAssign/Save">Course Assign to Teacher</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#"><i class="fa fa-user"></i>Student</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Student/Register">Register Student</a></li>
+                        <li><a href="/StudentResult/SaveStudentResult">Save Student Result</a></li>
+                        <li><a href="/ViewResult/Index">View Student Result</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#"><i class="fa fa-user"></i>Manage Classroom</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/AllocateClassroom/AllocateClass">Allocate Classrooms</a></li>
+                        <li><a href="/ViewCourseSchedule/Index">View Class Schedule and Room Allocation Information</a></li>
+                        <li><a href="">Unallocate All Classrooms</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        @RenderBody()
+    </div>
+
+        <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <script>
+        $('.dropdown').hover(
+            function() {
+                $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn();
+            },
+            function() {
+                $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut();
+            }
+        );
+
+        $('.dropdown-menu').hover(
+            function() {
+                $(this).stop(true, true);
+            },
+            function() {
+                $(this).stop(true, true).delay(200).fadeOut();
+            }
+        );
+    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,96 @@
+﻿@using UniversityManagementSystem.Models
+
+@{
+    ViewBag.Title = "Save";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+
+<div class="container">
+
+    <form id="myForm" method="post" role="form" style="width: 500px">
+        <fieldset>
+            <legend>Save Teacher</legend>
+            <div class="form-group">
+                <label for="Name">Name:</label>
+                <input type="text" class="form-control" id="Name" name="Name">
+            </div>
+            <div class="form-group">
+                <label for="Address">Address:</label>
+                <textarea class="form-control" rows="5" id="Address" name="Address"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="text" class="form-control" id="Email" name="Email"><span style="color: red">@ViewBag.emailErrormessage</span>
+            </div>
+            <div class="form-group">
+                <label for="Contact_no">Contact_no:</label>
+                <input class="form-control" id="Contact_no" name="Contact_no">
+            </div>
+            <div class="form-group">
+                <label for="DesignationId">DesignationId:</label>
+                <select class="form-control" id="DesignationId" name="DesignationId">
+                    @foreach (Designation designation in ViewBag.designations)
+                    {
+                        <option value="@designation.Id">@designation.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Department">Department:</label>
+                <select class="form-control" id="Department" name="DepartmentId">
+                    @foreach (Department department in ViewBag.departments)
+                    {
+                        <option value="@department.Id">@department.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Credit_taken">Credit to taken:</label>
+                <input class="form-control" id="Credit_taken" name="Credit_taken"><span style="color: red">@ViewBag.nonnegationErrormessage</span>
+            </div>
+
+            <div>
+                <input type="submit" class="btn btn-info" value="Save"><span style="color: green">@ViewBag.succesmessage</span>
+            </div>
+            <div></div>
+        </fieldset>
+    </form>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/jquery-2.2.3.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#myForm").validate({
+                rules: {
+                    Name: "required",
+                    Address: "required",
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Contact_no: "required",
+                    DesignationId: "required",
+                    DepartmentId: "required",
+                    Credit_taken: "required"
+
+                },
+                messages: {
+                    Name: "Please enter Name",
+                    Address: "Enter Address",
+                    email: {
+                        required: "Please enter email",
+                        email: "Enter valid email"
+                    },
+                    Contact_no: "Enter contact no",
+                    DesignationId: "Select designation",
+                    DepartmentId: "Select department",
+                    Credit_taken: "Enter how many credit to be taken"
+                }
+            });
+        });
+    </script>
+}

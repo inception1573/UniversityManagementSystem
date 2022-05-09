@@ -1,0 +1,94 @@
+﻿@using UniversityManagementSystem.Models
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+<div class="container">
+
+    <form id="myForm" method="post" role="form" style="width: 500px">
+        <fieldset>
+            <legend>Register Student</legend>
+           
+            <div class="form-group">
+                <label for="Name">Name:</label>
+                <input type="text" class="form-control" id="Name" name="Name">
+            </div>
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input class="form-control" id="Email" name="Email"><span style="color: red"> @ViewBag.emailErrormessage</span>
+            </div>
+            <div class="form-group">
+                <label for="ContactNo">Contact No:</label>
+                <input class="form-control" id="ContactNo" name="ContactNo">
+            </div>
+            <div class="form-group">
+                <label for="RegDate">Date:</label>
+                <input class="form-control" id="RegDate" name="RegDate">
+            </div>
+            <div class="form-group">
+                <label for="Address">Address:</label>
+                <textarea class="form-control" rows="5" id="Address" name="Address"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="Department">Department:</label>
+                <select class="form-control" id="Department" name="DepartmentId">
+                    <option value="">Select....</option>
+                    @foreach (Department department in ViewBag.departments)
+                    {
+                        <option value="@department.Id">@department.Name</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-info" value="Save"><span style="color: green"> @ViewBag.registersuccesmessage</span>
+            </div>
+            <div></div>
+        </fieldset>
+    </form>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/jquery-2.2.3.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#RegDate').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            $("#myForm").validate({
+                rules: {
+                    Name: "required",
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    ContactNo: "required",
+                    RegDate: "required",
+                    Address: "required",
+                    DepartmentId: "required"
+
+                },
+                messages: {
+                    Name: "Please enter Name",
+                    Email: {
+                        required: "Please enter email",
+                        email: "Enter valid email"
+                    },
+                    ContactNo: "Enter contact no",
+                    RegDate: "Select Registration Date",
+                    Address: "Please enter address",
+                    DepartmentId: "Select department"
+                }
+            });
+        });
+
+    </script>
+}

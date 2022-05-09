@@ -1,0 +1,111 @@
+﻿@using UniversityManagementSystem.Models
+
+@{
+    ViewBag.Title = "SaveStudentResult";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+<div class="container">
+
+    <form id="myForm" method="post" role="form" style="width: 500px">
+        <fieldset>
+            <legend>Save Student Result</legend>
+
+            <div class="form-group">
+                <label for="RegNo">Student Reg. No.:</label>
+                <select class="form-control" id="RegNo" name="StudentId">
+                    <option value="">Select .....</option>
+                    @foreach (Student student in ViewBag.studentRegnos)
+                    {
+                        <option value="@student.Id">@student.RegNo</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Name">Name:</label>
+                <input type="text" readonly="readonly" class="form-control" id="Name" name="Name">
+            </div>
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="text" readonly="readonly" class="form-control" id="Email" name="Email">
+            </div>
+            <div class="form-group">
+                <label for="Demartment">Demartment:</label>
+                <input type="text" readonly="readonly" class="form-control" id="Demartment" name="Demartment">
+            </div>
+            <div class="form-group">
+                <label for="SelectCourse">Select Course:</label>
+                <select class="form-control" id="SelectCourse" name="CourseId">
+                    <option value="">Select .....</option>
+                   
+                </select><span style="color: red"> @ViewBag.Erroemessage</span>
+            </div>
+            <div class="form-group">
+                <label for="Grade">Select Grade Letter:</label>
+                <select class="form-control" id="Grade" name="GradeId">
+                    <option value="">Select .....</option>
+                    @foreach (Grade grade in ViewBag.grades)
+                    {
+                        <option value="@grade.Id">@grade.GradeName</option>
+                    }
+                </select>
+            </div>
+
+            <div>
+                <input type="submit" class="btn btn-info" value="Save"><span style="color: green"> @ViewBag.succesmessage</span>
+            </div>
+            <div></div>
+        </fieldset>
+    </form>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $("#RegNo").change(function () {
+                
+                var Id = $("#RegNo").val();
+                $("#Name").val("");
+                $("#Email").val("");
+                $("#Demartment").val("");
+                $("#SelectCourse").empty();
+                var json = { studentId: Id };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("StudentInfoWithEnrollCourse", "StudentResult")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function(data) {
+                        //alert(data);
+                        //$("#TeacherId").prop('disabled', false);
+                        $("#SelectCourse").append('<option value=>Select...</option>');
+                        $.each(data, function (key, value) {
+                            $("#Name").val(value.StudentName);
+                            $("#Email").val(value.Email);
+                            $("#Demartment").val(value.DepartmentName);
+                            $("#SelectCourse").append('<option value=' + value.CourseId + '>' + value.CourseName + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+
+        $("#myForm").validate({
+            rules: {
+                StudentId: "required",
+                CourseId: "required",
+                GradeId: "required",
+            },
+            messages: {
+                StudentId: "Select Student Reg. No.",
+                CourseId: "Select Course",
+                GradeId: "Select Grade",
+            }
+        });
+    </script>
+}

@@ -1,0 +1,73 @@
+﻿@using UniversityManagementSystem.Models
+
+@{
+    ViewBag.Title = "AllocateClass";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+
+<div class="container">
+
+    <form id="myForm" method="post" role="form" style="width: 500px">
+        <fieldset>
+            <legend>Allocate Classroom</legend>
+            <div class="form-group">
+                <label for="Department">Department:</label>
+                <select class="form-control" id="Department" name="DepartmentId">
+                    <option value="">Select Department...</option>
+                    @foreach (Department department in ViewBag.departments)
+                    {
+                        <option value="@department.Id">@department.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="CourseId">Course:</label>
+                <select class="form-control" id="CourseId" name="CourseId">
+                    <option value="">Select Course...</option>
+                    @foreach (Course course in ViewBag.courses)
+                    {
+                        <option value="@course.Id">@course.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="RoomNo">Room No:</label>
+                <select class="form-control" id="RoomNo" name="RoomNo">
+                    <option value="">Select Room no...</option>
+                    @foreach (string room in ViewBag.rooms)
+                    {
+                        <option value="@room">@room</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Day">Day:</label>
+                <select class="form-control" id="Day" name="Day">
+                    <option value="">Select Day...</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thusday">Thusday</option>
+                    <option value="Friday">Friday</option>
+                </select>
+            </div>
+            <div style="width: 120px" class="form-group">
+                <label for="FromTime">From:</label>
+                <input type="time" class="form-control" id="FromTime" name="FromTime">
+                @*<input type="radio" name="FromAmPm" value="AM"> AM  &nbsp; <input type="radio" name="FromAmPm" value="PM"> PM*@
+            </div>
+            <div class="form-group">
+                <label for="ToTime">To:</label>
+                <input style="width: 120px" type="time" class="form-control" id="ToTime" name="ToTime">
+                @*<input type="radio" name="ToAmPm" value="AM">AM &nbsp; <input type="radio" name="ToAmPm" value="PM"> PM*@
+            </div>
+            <div>
+                <input type="submit" class="btn btn-info" value="Save"><span style="color: green">@ViewBag.succesMessage</span><span style="color: red">@ViewBag.TimeExistMessage</span>
+            </div>
+            <div></div>
+        </fieldset>
+    </form>
+</div>
